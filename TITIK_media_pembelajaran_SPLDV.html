@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TITIK | Media Pembelajaran SPLDV</title>
+  <style>
+    :root{
+      --navy:#173b68; --blue:#3979bd; --sky:#e8f3ff; --pale:#f5f9fd;
+      --green:#2d9b68; --yellow:#ffc85a; --ink:#26364a; --muted:#718096;
+      --line:#e5edf5; --white:#fff; --shadow:0 8px 24px rgba(31,67,105,.08);
+      --radius:18px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:#f7f9fc;color:var(--ink);font-family:Arial,Helvetica,sans-serif;line-height:1.6}
+    button{font:inherit;cursor:pointer}
+    .top-line{height:8px;background:var(--green)}
+    .container{width:min(1120px,92%);margin:auto}
+    header{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20}
+    .nav{height:72px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+    .brand{display:flex;align-items:center;gap:11px;border:0;background:none;color:var(--navy);font-size:25px;font-weight:900;letter-spacing:1px}
+    .brand-mark{width:39px;height:39px;border-radius:12px;background:var(--green);color:white;display:grid;place-items:center;font-size:22px}
+    .nav-links{display:flex;gap:8px;align-items:center}
+    .nav-links button{border:0;background:transparent;color:#52657a;padding:10px 14px;border-radius:10px;font-weight:700}
+    .nav-links button:hover,.nav-links button.active{background:var(--sky);color:var(--blue)}
+    .menu-toggle{display:none;border:0;background:var(--sky);color:var(--navy);border-radius:10px;padding:9px 12px}
+    main{padding:26px 0 45px}
+    .hero{min-height:285px;border-radius:22px;overflow:hidden;position:relative;background:linear-gradient(110deg,#e5f2ff 0%,#f2f8ff 58%,#d8ecff 100%);display:flex;align-items:center;padding:38px 5%;box-shadow:var(--shadow)}
+    .hero-copy{width:57%;position:relative;z-index:2}
+    .eyebrow{font-size:12px;letter-spacing:1.2px;text-transform:uppercase;color:var(--green);font-weight:800}
+    h1{font-size:clamp(34px,5vw,55px);line-height:1.05;color:var(--navy);margin:8px 0 13px}
+    .hero p{max-width:520px;color:#536a83;margin:0 0 22px}
+    .hero-actions{display:flex;align-items:center;gap:11px;flex-wrap:wrap}
+    .primary,.secondary{border:0;border-radius:999px;padding:11px 19px;font-weight:800;transition:.2s}
+    .primary{background:var(--yellow);color:#49360b;box-shadow:0 4px 0 #e6ae3c}
+    .primary:hover{transform:translateY(-2px)}
+    .secondary{background:#fff;color:var(--blue);border:1px solid #d7e6f6}
+    .hero-art{position:absolute;right:4%;bottom:0;width:38%;height:92%;display:flex;align-items:center;justify-content:center}
+    .art-circle{width:min(260px,90%);aspect-ratio:1;border-radius:50%;background:#c7e3ff;position:absolute;right:12%;bottom:-18%}
+    .math-card{position:relative;background:#fff;border:2px solid #d8e8f7;border-radius:16px;padding:22px 24px;box-shadow:0 14px 28px #7da4c733;transform:rotate(-7deg);font-weight:800;color:var(--navy);font-size:24px}
+    .math-card small{display:block;font-size:11px;color:var(--muted);font-weight:600;margin-top:8px}
+    .calculator{position:absolute;right:0;bottom:30px;background:#355d86;color:white;padding:13px;border-radius:12px;transform:rotate(9deg);box-shadow:var(--shadow);font-size:23px}
+    .section{margin-top:34px}
+    .section-heading{display:flex;justify-content:space-between;align-items:end;gap:15px;margin-bottom:15px}
+    .section-heading h2{font-size:20px;color:var(--navy);margin:0}
+    .section-heading p{margin:3px 0 0;color:var(--muted);font-size:13px}
+    .text-link{border:0;background:none;color:var(--blue);font-size:12px;font-weight:800}
+    .access-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .access-card{border:1px solid transparent;border-radius:16px;padding:19px;min-height:150px;text-align:left;display:flex;flex-direction:column;justify-content:space-between;transition:.2s}
+    .access-card:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+    .access-card.material{background:#eaf3ff;border-color:#deebfb}
+    .access-card.practice{background:#fff8e9;border-color:#f7edda}
+    .access-card.evaluation{background:#eaf7f1;border-color:#dcefe6}
+    .access-top{display:flex;justify-content:space-between;align-items:center}
+    .access-icon{width:39px;height:39px;border-radius:12px;background:#fff;display:grid;place-items:center;font-size:20px}
+    .round-arrow{width:27px;height:27px;border-radius:50%;background:var(--blue);color:white;display:grid;place-items:center;font-weight:bold}
+    .practice .round-arrow{background:#f5bd4e;color:#573e08}
+    .evaluation .round-arrow{background:#48a77b}
+    .access-card h3{margin:12px 0 2px;color:var(--navy);font-size:17px}
+    .access-card p{margin:0;color:#64758a;font-size:12px}
+    .popular-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}
+    .popular-card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:15px;display:flex;gap:12px;align-items:flex-start;box-shadow:0 3px 12px #294d7010}
+    .number{flex:none;width:32px;height:32px;border-radius:10px;background:#e9f3ff;color:var(--blue);display:grid;place-items:center;font-size:12px;font-weight:900}
+    .popular-card h3{font-size:13px;color:var(--navy);margin:0 0 5px}
+    .popular-card p{font-size:11px;color:var(--muted);margin:0}
+    .popular-card button{border:0;background:none;color:var(--blue);font-size:11px;font-weight:800;padding:8px 0 0}
+    .motivation{margin-top:55px;border-radius:16px;padding:19px 24px;background:linear-gradient(100deg,#e6f3ff,#d9ecff);display:flex;align-items:center;gap:15px}
+    .motivation .target{font-size:28px}
+    .motivation h3{margin:0;color:var(--navy);font-size:15px}
+    .motivation p{margin:2px 0 0;color:#617a95;font-size:12px}
+    footer{background:#fff;border-top:1px solid var(--line);padding:23px 0;color:#77869a;font-size:12px}
+    .footer-inner{display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap}
+    /* Subpages */
+    .page{display:none;min-height:65vh}
+    .page.active{display:block}
+    .page-intro{background:linear-gradient(110deg,#eaf4ff,#f7fbff);border-radius:18px;padding:24px;margin-bottom:20px}
+    .page-intro h1{font-size:30px;margin:0 0 7px}
+    .page-intro p{margin:0;color:#61758c}
+    .back-btn{border:0;background:none;color:var(--blue);font-weight:800;padding:0 0 14px}
+    .content-card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:21px;margin-bottom:15px;box-shadow:0 4px 14px #294d7008}
+    .content-card h2,.content-card h3{color:var(--navy);margin-top:0}
+    .content-card h3{font-size:17px}
+    .content-card p,.content-card li{color:#586b80}
+    .tag{display:inline-block;background:#edf5ff;color:#3979bd;padding:4px 9px;border-radius:20px;font-size:11px;font-weight:800;margin:0 5px 7px 0}
+    .formula{background:#f4f8fc;border-left:4px solid var(--blue);padding:13px 16px;border-radius:8px;font-size:20px;color:var(--navy);font-weight:800;margin:12px 0}
+    .lesson-list{display:grid;grid-template-columns:repeat(2,1fr);gap:13px}
+    .lesson-item{border:1px solid var(--line);background:white;border-radius:13px;padding:16px;text-align:left}
+    .lesson-item:hover{border-color:#9fc7ef;background:#f9fcff}
+    .lesson-item strong{display:block;color:var(--navy);margin-bottom:4px}
+    .lesson-item span{font-size:12px;color:var(--muted)}
+    .quiz-top{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;color:var(--muted);font-size:13px;margin-bottom:13px}
+    .progress{height:8px;border-radius:10px;background:#edf1f5;overflow:hidden;margin-bottom:20px}
+    .progress span{display:block;height:100%;width:0;background:var(--green);transition:width .3s}
+    .question{font-size:18px;font-weight:800;color:var(--navy);margin:10px 0 17px}
+    .options{display:grid;gap:10px}
+    .option{padding:12px 14px;border:1px solid var(--line);border-radius:11px;background:white;text-align:left;color:#42566d}
+    .option:hover{border-color:#8bb9e8;background:#f7fbff}
+    .option.selected{border-color:var(--blue);background:#edf6ff}
+    .option.correct{border-color:#5ab889;background:#eefaf3}
+    .option.wrong{border-color:#e28b8b;background:#fff2f2}
+    .feedback{padding:12px;border-radius:10px;margin-top:13px;font-size:13px;display:none}
+    .feedback.show{display:block}
+    .feedback.good{background:#edf9f2;color:#26734c}
+    .feedback.bad{background:#fff3ed;color:#9a4d25}
+    .quiz-actions{display:flex;justify-content:space-between;gap:10px;margin-top:18px}
+    .level-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:15px}
+    .level-tabs button{border:1px solid var(--line);background:#fff;border-radius:30px;padding:8px 14px;color:#60748a;font-size:12px;font-weight:800}
+    .level-tabs button.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+    .result-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+    .stat{background:#f5f9fd;border-radius:13px;padding:15px}
+    .stat span{font-size:11px;color:var(--muted)}
+    .stat strong{display:block;font-size:25px;color:var(--navy)}
+    .chart-wrap{height:260px;position:relative;margin-top:12px}
+    canvas{width:100%;height:100%}
+    .empty{padding:28px;text-align:center;color:var(--muted);background:#f8fafc;border-radius:12px}
+    @media(max-width:760px){
+      .nav{height:64px}.menu-toggle{display:block}.nav-links{display:none;position:absolute;top:64px;left:0;right:0;background:#fff;padding:12px 4%;border-bottom:1px solid var(--line);flex-direction:column;align-items:stretch}
+      .nav-links.open{display:flex}.nav-links button{text-align:left}
+      .hero{min-height:330px;padding:28px 6%;align-items:flex-start}.hero-copy{width:100%}.hero p{max-width:75%}
+      .hero-art{width:44%;height:48%;right:1%;opacity:.8}.math-card{font-size:17px;padding:15px}.calculator{font-size:17px}
+      .access-grid,.popular-grid{grid-template-columns:1fr}.access-card{min-height:130px}
+      .lesson-list{grid-template-columns:1fr}.result-grid{grid-template-columns:1fr}
+      .motivation{margin-top:35px}
+    }
+    @media(min-width:761px) and (max-width:950px){.popular-grid{grid-template-columns:repeat(2,1fr)}}
+  </style>
+</head>
+<body>
+  <div class="top-line"></div>
+  <header>
+    <div class="container nav">
+      <button class="brand" onclick="showPage('home')" aria-label="Kembali ke beranda">
+        <span class="brand-mark">∑</span><span>TITIK</span>
+      </button>
+      <button class="menu-toggle" id="menuToggle" aria-label="Buka menu">☰</button>
+      <nav class="nav-links" id="navLinks">
+        <button class="active" data-page="home" onclick="showPage('home')">Beranda</button>
+        <button data-page="materi" onclick="showPage('materi')">Materi</button>
+        <button data-page="latihan" onclick="showPage('latihan')">Latihan</button>
+        <button data-page="evaluasi" onclick="showPage('evaluasi')">Evaluasi</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- BERANDA -->
+    <section class="page active" id="home">
+      <section class="hero">
+        <div class="hero-copy">
+          <div class="eyebrow">Media Pembelajaran Matematika • Kelas IX SMP</div>
+          <h1>Selamat Datang di<br>TITIK.</h1>
+          <p>Temukan cara mudah memahami Sistem Persamaan Linear Dua Variabel (SPLDV). Belajar, berlatih, dan temukan jawabannya bersama TITIK.</p>
+          <div class="hero-actions">
+            <button class="primary" onclick="showPage('materi')">Mulai Belajar <span>➜</span></button>
+            <button class="secondary" id="soundButton" onclick="playWelcome()">🔊 Dengarkan Sambutan</button>
+          </div>
+        </div>
+        <div class="hero-art" aria-hidden="true">
+          <div class="art-circle"></div>
+          <div class="math-card">2x + 3y = 12<small>Temukan nilai x dan y!</small></div>
+          <div class="calculator">▦<br><small style="font-size:9px;color:#dcecff">123 ×</small></div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-heading"><div><h2>Akses Pembelajaran</h2><p>Pilih menu yang ingin kamu pelajari.</p></div></div>
+        <div class="access-grid">
+          <button class="access-card material" onclick="showPage('materi')">
+            <div class="access-top"><span class="access-icon">📘</span><span class="round-arrow">›</span></div>
+            <div><h3>Materi</h3><p>Pelajari konsep dan metode penyelesaian SPLDV secara bertahap.</p></div>
+          </button>
+          <button class="access-card practice" onclick="showPage('latihan')">
+            <div class="access-top"><span class="access-icon">✏️</span><span class="round-arrow">›</span></div>
+            <div><h3>Latihan</h3><p>Asah pemahaman melalui soal dari tingkat dasar hingga HOTS.</p></div>
+          </button>
+          <button class="access-card evaluation" onclick="showPage('evaluasi')">
+            <div class="access-top"><span class="access-icon">▣</span><span class="round-arrow">›</span></div>
+            <div><h3>Evaluasi</h3><p>Lihat hasil latihan dan kenali materi yang perlu ditingkatkan.</p></div>
+          </button>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-heading">
+          <div><h2>📚 Materi yang Tersedia</h2><p>Materi pilihan untuk memulai perjalanan belajarmu.</p></div>
+          <button class="text-link" onclick="showPage('materi')">Lihat Semua →</button>
+        </div>
+        <div class="popular-grid">
+          <article class="popular-card"><span class="number">01</span><div><h3>Pengertian dan Bentuk Umum SPLDV</h3><p>Mengenal persamaan linear dua variabel.</p><button onclick="openLesson('pengertian')">Pelajari sekarang →</button></div></article>
+          <article class="popular-card"><span class="number">02</span><div><h3>Metode Penyelesaian SPLDV</h3><p>Memahami metode substitusi dan eliminasi.</p><button onclick="openLesson('metode')">Pelajari sekarang →</button></div></article>
+          <article class="popular-card"><span class="number">03</span><div><h3>Penerapan SPLDV</h3><p>Menyelesaikan masalah dalam kehidupan sehari-hari.</p><button onclick="openLesson('penerapan')">Pelajari sekarang →</button></div></article>
+        </div>
+      </section>
+      <section class="motivation"><span class="target">🎯</span><div><h3>Sudah siap menguji pemahamanmu?</h3><p>Kerjakan latihan dan evaluasi untuk melihat sejauh mana perkembangan belajarmu.</p></div></section>
+    </section>
+
+    <!-- MATERI -->
+    <section class="page" id="materi">
+      <button class="back-btn" onclick="showPage('home')">← Kembali ke Beranda</button>
+      <div class="page-intro"><div class="eyebrow">Ruang Belajar</div><h1>Materi SPLDV</h1><p>Pelajari setiap bagian secara berurutan. Pahami konsepnya, lalu coba contoh soalnya.</p></div>
+      <div class="lesson-list">
+        <button class="lesson-item" onclick="openLesson('pengertian')"><strong>01. Pengertian dan Bentuk Umum SPLDV</strong><span>Konsep persamaan linear dua variabel dan penyelesaiannya.</span></button>
+        <button class="lesson-item" onclick="openLesson('model')"><strong>02. Membuat Model Matematika</strong><span>Mengubah informasi dari soal cerita menjadi dua persamaan.</span></button>
+        <button class="lesson-item" onclick="openLesson('grafik')"><strong>03. Metode Grafik</strong><span>Menentukan penyelesaian melalui titik potong dua garis.</span></button>
+        <button class="lesson-item" onclick="openLesson('substitusi')"><strong>04. Metode Substitusi</strong><span>Mengganti salah satu variabel dengan bentuk yang setara.</span></button>
+        <button class="lesson-item" onclick="openLesson('eliminasi')"><strong>05. Metode Eliminasi</strong><span>Menghilangkan salah satu variabel untuk memperoleh variabel lain.</span></button>
+        <button class="lesson-item" onclick="openLesson('metode')"><strong>06. Metode Campuran</strong><span>Menggabungkan eliminasi dan substitusi.</span></button>
+        <button class="lesson-item" onclick="openLesson('penerapan')"><strong>07. Penerapan SPLDV</strong><span>Menyelesaikan masalah kontekstual dalam kehidupan sehari-hari.</span></button>
+      </div>
+      <div id="lessonDetail" style="margin-top:18px"></div>
+    </section>
+
+    <!-- LATIHAN -->
+    <section class="page" id="latihan">
+      <button class="back-btn" onclick="showPage('home')">← Kembali ke Beranda</button>
+      <div class="page-intro"><div class="eyebrow">Uji Pemahaman</div><h1>Latihan SPLDV</h1><p>Pilih tingkat latihan. Jawaban dan hasil latihan akan tersimpan pada perangkat yang kamu gunakan.</p></div>
+      <div class="level-tabs">
+        <button class="active" data-level="dasar" onclick="startQuiz('dasar')">Tingkat Dasar</button>
+        <button data-level="menengah" onclick="startQuiz('menengah')">Tingkat Menengah</button>
+        <button data-level="hots" onclick="startQuiz('hots')">Tingkat HOTS</button>
+      </div>
+      <div class="content-card" id="quizCard">
+        <div class="quiz-top"><span id="levelLabel">Tingkat Dasar</span><span id="questionCount">Soal 1 dari 3</span></div>
+        <div class="progress"><span id="progressBar"></span></div>
+        <div class="tag">Pilih satu jawaban yang paling tepat</div>
+        <div class="question" id="questionText"></div>
+        <div class="options" id="options"></div>
+        <div class="feedback" id="feedback"></div>
+        <div class="quiz-actions"><button class="secondary" onclick="showPage('materi')">Buka Materi</button><button class="primary" id="nextButton" onclick="nextQuestion()" disabled>Periksa Jawaban</button></div>
+      </div>
+    </section>
+
+    <!-- EVALUASI -->
+    <section class="page" id="evaluasi">
+      <button class="back-btn" onclick="showPage('home')">← Kembali ke Beranda</button>
+      <div class="page-intro"><div class="eyebrow">Rekap Perkembangan</div><h1>Evaluasi Belajar</h1><p>Ringkasan hasil latihan yang telah kamu kerjakan pada perangkat ini.</p></div>
+      <div class="result-grid">
+        <div class="stat"><span>Latihan diselesaikan</span><strong id="totalAttempt">0</strong></div>
+        <div class="stat"><span>Rata-rata nilai</span><strong id="averageScore">–</strong></div>
+        <div class="stat"><span>Nilai tertinggi</span><strong id="bestScore">–</strong></div>
+      </div>
+      <div class="content-card" style="margin-top:16px">
+        <h3>Grafik Hasil Berdasarkan Tingkat</h3>
+        <p style="font-size:12px">Grafik memperlihatkan rata-rata nilai pada setiap tingkat latihan. Bagian dengan nilai lebih rendah dapat menjadi prioritas belajar berikutnya.</p>
+        <div class="chart-wrap"><canvas id="resultChart" aria-label="Grafik nilai latihan"></canvas></div>
+        <div id="chartEmpty" class="empty">Belum ada hasil latihan. Kerjakan latihan terlebih dahulu untuk melihat grafik perkembanganmu.</div>
+      </div>
+      <div class="content-card">
+        <h3>Riwayat Pengerjaan</h3>
+        <div id="historyList" class="empty">Belum ada riwayat pengerjaan.</div>
+      </div>
+      <button class="secondary" onclick="clearResults()">Hapus riwayat pada perangkat ini</button>
+    </section>
+  </main>
+
+  <footer><div class="container footer-inner"><span><strong style="color:var(--navy)">TITIK</strong> · Media Pembelajaran Matematika SPLDV Kelas IX</span><span>Belajar hari ini, temukan jawaban esok hari. © 2026</span></div></footer>
+
+<script>
+  const welcomeText = "Selamat datang di TITIK, karena dengan mengetahui TITIK maka kamu akan menemukan jawabannya. Selamat belajar dan sampai jumpa pada nilai sempurna kamu.";
+  let currentLevel = "dasar", currentQuestion = 0, selectedAnswer = null, answered = false, currentScore = 0;
+  const levels = {
+    dasar: [
+      {q:"Bentuk umum persamaan linear dua variabel adalah ...",o:["ax + by = c","ax² + by = c","ax + b = 0","ax³ + by = c"],a:0,e:"SPLDV terdiri atas dua persamaan linear yang masing-masing memiliki dua variabel."},
+      {q:"Manakah pasangan yang merupakan solusi dari x + y = 7 dan x − y = 1?",o:["(3, 4)","(4, 3)","(5, 2)","(2, 5)"],a:1,e:"Pasangan (4, 3) memenuhi kedua persamaan: 4 + 3 = 7 dan 4 − 3 = 1."},
+      {q:"Jika x = 2 dan y = 3, nilai 2x + y adalah ...",o:["5","6","7","8"],a:2,e:"Substitusikan x = 2 dan y = 3: 2(2) + 3 = 7."}
+    ],
+    menengah: [
+      {q:"Diketahui x + y = 10 dan x − y = 2. Nilai x adalah ...",o:["4","5","6","8"],a:2,e:"Jumlahkan kedua persamaan: 2x = 12, sehingga x = 6."},
+      {q:"Diketahui 2x + y = 11 dan x + y = 7. Nilai y adalah ...",o:["2","3","4","5"],a:2,e:"Kurangkan persamaan pertama dengan kedua: x = 4. Maka y = 7 − 4 = 3. Jadi pilihan yang benar adalah 3.",fix:1},
+      {q:"Harga 2 buku dan 1 pensil adalah Rp11.000. Harga 1 buku dan 1 pensil Rp7.000. Harga satu buku adalah ...",o:["Rp3.000","Rp4.000","Rp5.000","Rp6.000"],a:1,e:"Misalkan b = harga buku dan p = harga pensil. 2b+p=11.000 dan b+p=7.000. Selisihnya b=4.000."}
+    ],
+    hots: [
+      {q:"Di kantin, 2 roti dan 3 susu berharga Rp24.000, sedangkan 3 roti dan 2 susu berharga Rp26.000. Berapa harga satu roti?",o:["Rp4.000","Rp5.000","Rp6.000","Rp7.000"],a:1,e:"Misalkan r roti dan s susu (ribuan). 2r+3s=24 dan 3r+2s=26. Eliminasi menghasilkan r=6. Jadi harga roti Rp6.000.",fix:2},
+      {q:"Jumlah dua bilangan adalah 18. Bilangan pertama 4 lebih besar daripada bilangan kedua. Pasangan bilangan tersebut adalah ...",o:["(10, 8)","(11, 7)","(12, 6)","(13, 5)"],a:1,e:"Misalkan x+y=18 dan x−y=4. Jumlahkan: 2x=22, x=11, sehingga y=7."},
+      {q:"Sebuah tempat parkir berisi 20 kendaraan berupa mobil dan sepeda motor. Jumlah seluruh rodanya 56. Jika mobil memiliki 4 roda dan motor 2 roda, banyak mobil adalah ...",o:["6","7","8","9"],a:2,e:"Misalkan m mobil dan s motor. m+s=20 serta 4m+2s=56. Kurangkan persamaan kedua dengan 2(m+s)=40, diperoleh 2m=16 sehingga m=8."}
+    ]
+  };
+  const lessons = {
+    pengertian:{title:"Pengertian dan Bentuk Umum SPLDV",body:`<p>Sistem Persamaan Linear Dua Variabel (SPLDV) adalah dua persamaan linear yang memiliki dua variabel dan harus dipenuhi secara bersamaan.</p><div class="formula">a₁x + b₁y = c₁<br>a₂x + b₂y = c₂</div><p><b>x</b> dan <b>y</b> merupakan variabel, sedangkan a, b, dan c merupakan konstanta. Solusi SPLDV adalah pasangan nilai (x, y) yang memenuhi kedua persamaan.</p><h3>Contoh</h3><p>x + y = 7 dan x − y = 1 memiliki solusi x = 4 dan y = 3 karena kedua persamaan terpenuhi.</p>`},
+    model:{title:"Membuat Model Matematika",body:`<p>Model matematika dibuat dengan mengubah informasi pada soal cerita menjadi persamaan.</p><ol><li>Tentukan dua besaran yang belum diketahui.</li><li>Misalkan besaran tersebut dengan variabel x dan y.</li><li>Ubah informasi soal menjadi dua persamaan.</li><li>Periksa apakah persamaan sudah sesuai dengan informasi soal.</li></ol><p>Contoh: jumlah dua bilangan adalah 12 dan selisihnya 2. Modelnya adalah x + y = 12 dan x − y = 2.</p>`},
+    grafik:{title:"Metode Grafik",body:`<p>Metode grafik dilakukan dengan menggambar dua garis pada bidang koordinat. Titik potong kedua garis merupakan penyelesaian SPLDV.</p><ol><li>Tentukan minimal dua titik pada setiap persamaan.</li><li>Gambarkan kedua garis pada bidang koordinat.</li><li>Amati titik perpotongan kedua garis.</li></ol><p>Jika kedua garis berpotongan di (x, y), pasangan tersebut merupakan solusi SPLDV.</p>`},
+    substitusi:{title:"Metode Substitusi",body:`<p>Metode substitusi dilakukan dengan menyatakan satu variabel dalam bentuk variabel lain, kemudian menggantikannya ke persamaan kedua.</p><div class="formula">x + y = 7 → x = 7 − y</div><p>Jika persamaan lainnya adalah x − y = 1, substitusikan x = 7 − y:</p><div class="formula">(7 − y) − y = 1<br>6 = 2y<br>y = 3, sehingga x = 4</div>`},
+    eliminasi:{title:"Metode Eliminasi",body:`<p>Metode eliminasi bertujuan menghilangkan salah satu variabel dengan menjumlahkan atau mengurangkan dua persamaan yang koefisiennya telah disamakan.</p><div class="formula">x + y = 7<br>x − y = 1<br>──────── +<br>2x = 8 → x = 4</div><p>Substitusikan x = 4 ke persamaan pertama sehingga y = 3. Jadi, solusinya adalah (4, 3).</p>`},
+    metode:{title:"Metode Campuran",body:`<p>Metode campuran menggabungkan eliminasi dan substitusi. Pertama, gunakan eliminasi untuk memperoleh salah satu variabel. Selanjutnya, substitusikan nilai tersebut ke salah satu persamaan untuk menentukan variabel lainnya.</p><p>Metode ini sering digunakan karena dapat membuat proses perhitungan lebih ringkas.</p>`},
+    penerapan:{title:"Penerapan SPLDV",body:`<p>SPLDV dapat digunakan untuk menyelesaikan berbagai persoalan sehari-hari, misalnya menentukan harga barang, jumlah kendaraan, umur, atau jumlah benda.</p><h3>Contoh masalah</h3><p>Dua buku dan satu pensil berharga Rp11.000, sedangkan satu buku dan satu pensil berharga Rp7.000. Dengan memisalkan harga buku sebagai x dan harga pensil sebagai y, diperoleh:</p><div class="formula">2x + y = 11.000<br>x + y = 7.000</div><p>Dengan eliminasi, diperoleh x = 4.000. Jadi, harga satu buku adalah Rp4.000.</p>`}
+  };
+  function showPage(id){
+    document.querySelectorAll(".page").forEach(p=>p.classList.toggle("active",p.id===id));
+    document.querySelectorAll(".nav-links button").forEach(b=>b.classList.toggle("active",b.dataset.page===id));
+    document.getElementById("navLinks").classList.remove("open");
+    if(id==="evaluasi")renderEvaluation();
+    window.scrollTo({top:0,behavior:"smooth"});
+  }
+  document.getElementById("menuToggle").addEventListener("click",()=>document.getElementById("navLinks").classList.toggle("open"));
+  function playWelcome(){
+    if(!("speechSynthesis" in window)){alert("Browser ini belum mendukung fitur suara.");return;}
+    window.speechSynthesis.cancel();
+    const utterance=new SpeechSynthesisUtterance(welcomeText);
+    utterance.lang="id-ID";utterance.rate=.92;utterance.pitch=1;
+    document.getElementById("soundButton").textContent="🔊 Sedang Memutar...";
+    utterance.onend=()=>document.getElementById("soundButton").textContent="🔊 Dengarkan Sambutan";
+    utterance.onerror=()=>document.getElementById("soundButton").textContent="🔊 Dengarkan Sambutan";
+    window.speechSynthesis.speak(utterance);
+  }
+  function openLesson(key){
+    const lesson=lessons[key];if(!lesson)return;
+    document.getElementById("lessonDetail").innerHTML=`<article class="content-card"><button class="back-btn" onclick="document.getElementById('lessonDetail').innerHTML=''">✕ Tutup materi</button><h2>${lesson.title}</h2>${lesson.body}<button class="primary" onclick="showPage('latihan')">Coba Latihan →</button></article>`;
+    showPage("materi");
+    setTimeout(()=>document.getElementById("lessonDetail").scrollIntoView({behavior:"smooth",block:"start"}),100);
+  }
+  function startQuiz(level){
+    currentLevel=level;currentQuestion=0;selectedAnswer=null;answered=false;currentScore=0;
+    document.querySelectorAll(".level-tabs button").forEach(b=>b.classList.toggle("active",b.dataset.level===level));
+    renderQuestion();
+  }
+  function renderQuestion(){
+    const list=levels[currentLevel],item=list[currentQuestion];
+    document.getElementById("levelLabel").textContent="Tingkat "+({dasar:"Dasar",menengah:"Menengah",hots:"HOTS"}[currentLevel]);
+    document.getElementById("questionCount").textContent=`Soal ${currentQuestion+1} dari ${list.length}`;
+    document.getElementById("progressBar").style.width=((currentQuestion)/list.length*100)+"%";
+    document.getElementById("questionText").textContent=item.q;
+    document.getElementById("options").innerHTML=item.o.map((opt,i)=>`<button class="option" onclick="chooseAnswer(${i})">${String.fromCharCode(65+i)}. ${opt}</button>`).join("");
+    document.getElementById("feedback").className="feedback";document.getElementById("feedback").textContent="";
+    document.getElementById("nextButton").disabled=true;document.getElementById("nextButton").textContent="Periksa Jawaban";
+    selectedAnswer=null;answered=false;
+  }
+  function chooseAnswer(index){
+    if(answered)return;selectedAnswer=index;
+    document.querySelectorAll(".option").forEach((b,i)=>b.classList.toggle("selected",i===index));
+    document.getElementById("nextButton").disabled=false;
+  }
+  function nextQuestion(){
+    const list=levels[currentLevel],item=list[currentQuestion];
+    if(!answered){
+      if(selectedAnswer===null)return;
+      answered=true;
+      const correct=selectedAnswer===(item.fix??item.a);
+      if(correct)currentScore++;
+      document.querySelectorAll(".option").forEach((b,i)=>{if(i===(item.fix??item.a))b.classList.add("correct");else if(i===selectedAnswer)b.classList.add("wrong");});
+      const fb=document.getElementById("feedback");fb.className="feedback show "+(correct?"good":"bad");
+      fb.textContent=(correct?"Benar! ":"Belum tepat. ")+item.e;
+      document.getElementById("nextButton").textContent=currentQuestion===list.length-1?"Lihat Hasil":"Soal Berikutnya";
+      return;
+    }
+    if(currentQuestion<list.length-1){currentQuestion++;renderQuestion();}
+    else finishQuiz();
+  }
+  function finishQuiz(){
+    const score=Math.round(currentScore/levels[currentLevel].length*100);
+    const history=JSON.parse(localStorage.getItem("titikResults")||"[]");
+    history.push({level:currentLevel,score,date:new Date().toLocaleString("id-ID")});
+    localStorage.setItem("titikResults",JSON.stringify(history));
+    document.getElementById("quizCard").innerHTML=`<div style="text-align:center;padding:24px 5px"><div style="font-size:44px">🎉</div><h2 style="color:var(--navy)">Latihan Selesai!</h2><p>Nilai latihan tingkat ${currentLevel.toUpperCase()} kamu:</p><div style="font-size:54px;font-weight:900;color:var(--green)">${score}</div><p>Kamu menjawab benar ${currentScore} dari ${levels[currentLevel].length} soal.</p><button class="primary" onclick="restoreQuizCard();startQuiz('${currentLevel}')">Ulangi Latihan</button> <button class="secondary" onclick="showPage('evaluasi')">Lihat Evaluasi</button></div>`;
+  }
+  function restoreQuizCard(){
+    document.getElementById("quizCard").innerHTML=`<div class="quiz-top"><span id="levelLabel"></span><span id="questionCount"></span></div><div class="progress"><span id="progressBar"></span></div><div class="tag">Pilih satu jawaban yang paling tepat</div><div class="question" id="questionText"></div><div class="options" id="options"></div><div class="feedback" id="feedback"></div><div class="quiz-actions"><button class="secondary" onclick="showPage('materi')">Buka Materi</button><button class="primary" id="nextButton" onclick="nextQuestion()" disabled>Periksa Jawaban</button></div>`;
+  }
+  function renderEvaluation(){
+    const data=JSON.parse(localStorage.getItem("titikResults")||"[]");
+    document.getElementById("totalAttempt").textContent=data.length;
+    document.getElementById("averageScore").textContent=data.length?Math.round(data.reduce((a,b)=>a+b.score,0)/data.length):"–";
+    document.getElementById("bestScore").textContent=data.length?Math.max(...data.map(x=>x.score)):"–";
+    const names={dasar:"Dasar",menengah:"Menengah",hots:"HOTS"};
+    const history=document.getElementById("historyList");
+    if(!data.length){history.className="empty";history.textContent="Belum ada riwayat pengerjaan.";}
+    else{history.className="";history.innerHTML=[...data].reverse().map((x,i)=>`<div style="display:flex;justify-content:space-between;gap:10px;border-bottom:1px solid var(--line);padding:10px 0;font-size:13px"><span>${names[x.level]} · ${x.date}</span><strong style="color:var(--blue)">${x.score}/100</strong></div>`).join("");}
+    drawChart(data);
+  }
+  function drawChart(data){
+    const canvas=document.getElementById("resultChart"),empty=document.getElementById("chartEmpty"),ctx=canvas.getContext("2d");
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    if(!data.length){empty.style.display="block";canvas.style.display="none";return;}
+    empty.style.display="none";canvas.style.display="block";
+    const w=canvas.width=canvas.clientWidth*devicePixelRatio,h=canvas.height=canvas.clientHeight*devicePixelRatio;
+    ctx.scale(devicePixelRatio,devicePixelRatio);
+    const cw=canvas.clientWidth,ch=canvas.clientHeight;
+    const labels=["Dasar","Menengah","HOTS"],keys=["dasar","menengah","hots"];
+    const values=keys.map(k=>{const a=data.filter(d=>d.level===k);return a.length?a.reduce((s,d)=>s+d.score,0)/a.length:0;});
+    const left=38,right=12,top=18,bottom=34,plotH=ch-top-bottom,plotW=cw-left-right;
+    ctx.font="11px Arial";ctx.textAlign="right";ctx.fillStyle="#8291a3";
+    for(let n=0;n<=100;n+=20){const y=top+plotH-(n/100)*plotH;ctx.fillText(n,left-8,y+4);ctx.strokeStyle="#e9eff5";ctx.beginPath();ctx.moveTo(left,y);ctx.lineTo(cw-right,y);ctx.stroke();}
+    const slot=plotW/3,barW=Math.min(48,slot*.48);
+    values.forEach((v,i)=>{const bh=plotH*v/100,x=left+slot*i+(slot-barW)/2,y=top+plotH-bh;ctx.fillStyle=["#75a9df","#f1c56a","#68b78e"][i];ctx.beginPath();ctx.roundRect(x,y,barW,bh,6);ctx.fill();ctx.fillStyle="#52677e";ctx.textAlign="center";ctx.fillText(data.some(d=>d.level===keys[i])?Math.round(v):"–",x+barW/2,y-7);ctx.fillText(labels[i],x+barW/2,ch-10);});
+  }
+  function clearResults(){
+    if(confirm("Hapus semua riwayat latihan pada perangkat ini?")){
+      localStorage.removeItem("titikResults");renderEvaluation();
+    }
+  }
+  startQuiz("dasar");
+</script>
+</body>
+</html>
